@@ -5,6 +5,7 @@ var map;
  * Initialize Google map, called from HTML.
  */
 window.initMap = () => {
+  registerServiceWorker();
   fetchRestaurantFromURL((error, restaurant) => {
     if (error) { // Got an error!
       console.error(error);
@@ -18,6 +19,12 @@ window.initMap = () => {
       DBHelper.mapMarkerForRestaurant(self.restaurant, self.map);
     }
   });
+}
+
+registerServiceWorker = () => {
+  if('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js', {scope: './'});
+  }
 }
 
 /**
@@ -56,8 +63,13 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   address.innerHTML = restaurant.address;
 
   const image = document.getElementById('restaurant-img');
-  image.className = 'restaurant-img'
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  image.className = 'restaurant-img';
+
+  const imageFile = DBHelper.imageUrlForRestaurant(restaurant).slice(0, -4);
+
+  image.src = `${imageFile}-480.jpg`;
+  image.srcset = `${imageFile}-480.jpg 1x, ${imageFile}-800.jpg 2x`;
+
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
@@ -75,18 +87,23 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
  */
 fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => {
   const hours = document.getElementById('restaurant-hours');
+  const tbody = hours.querySelector('tbody');
   for (let key in operatingHours) {
     const row = document.createElement('tr');
 
-    const day = document.createElement('td');
+    const day = document.createElement('th');
+    day.classList.add('left')
     day.innerHTML = key;
     row.appendChild(day);
 
     const time = document.createElement('td');
-    time.innerHTML = operatingHours[key];
+    time.classList.add('right')
+    const timeSpan = document.createElement('span');
+    timeSpan.innerHTML = operatingHours[key];
+    time.appendChild(timeSpan);
     row.appendChild(time);
 
-    hours.appendChild(row);
+    tbody.appendChild(row);
   }
 }
 
@@ -117,24 +134,32 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
  */
 createReviewHTML = (review) => {
   const li = document.createElement('li');
-  const name = document.createElement('p');
+  li.classList.add('card');
+
+  const name = document.createElement('span');
+  name.classList.add('username');
   name.innerHTML = review.name;
   li.appendChild(name);
 
-  const date = document.createElement('p');
+  const date = document.createElement('span');
+  date.classList.add('date');
   date.innerHTML = review.date;
   li.appendChild(date);
 
   const rating = document.createElement('p');
-  rating.innerHTML = `Rating: ${review.rating}`;
+  rating.classList.add('rating');
+  rating.innerHTML = '★'.repeat(review.rating);
   li.appendChild(rating);
 
   const comments = document.createElement('p');
+  comments.classList.add('comments');
   comments.innerHTML = review.comments;
+
   li.appendChild(comments);
 
   return li;
 }
+
 
 /**
  * Add restaurant name to the breadcrumb navigation menu

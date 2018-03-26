@@ -8,9 +8,17 @@ var markers = []
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {
+  registerServiceWorker();
   fetchNeighborhoods();
   fetchCuisines();
 });
+
+
+registerServiceWorker = () => {
+  if('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js', {scope: './'});
+  }
+}
 
 /**
  * Fetch all neighborhoods and set their HTML.
@@ -137,32 +145,55 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
  */
 createRestaurantHTML = (restaurant) => {
   const li = document.createElement('li');
+  li.classList.add('card');
 
-  const image = document.createElement('img');
+  const imageName = DBHelper.imageUrlForRestaurant(restaurant);
+  const image = createResponsiveImageFor(imageName);
   image.className = 'restaurant-img';
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
   li.append(image);
+
+  const content = document.createElement('div');
+  content.classList.add('content');
+  li.append(content)
 
   const name = document.createElement('h1');
   name.innerHTML = restaurant.name;
-  li.append(name);
+  content.append(name);
 
   const neighborhood = document.createElement('p');
   neighborhood.innerHTML = restaurant.neighborhood;
-  li.append(neighborhood);
+  content.append(neighborhood);
 
   const address = document.createElement('p');
   address.innerHTML = restaurant.address;
-  li.append(address);
+  content.append(address);
+
+  const cardAction = document.createElement('div');
+  cardAction.classList.add('card-action');
+  li.append(cardAction);
 
   const more = document.createElement('a');
   more.innerHTML = 'View Details';
   more.href = DBHelper.urlForRestaurant(restaurant);
-  li.append(more)
+  more.setAttribute('aria-label', `View details for ${restaurant.name}`);
+
+  cardAction.append(more)
 
   return li
 }
 
+
+createResponsiveImageFor = (imageName) => {
+  // remove extension
+  imageName = imageName.slice(0, -4);
+
+  const image = document.createElement('img');
+  image.src = `${imageName}-360.jpg`;
+  image.srcset = `${imageName}-360.jpg 1x, ${imageName}-800.jpg 2x`;
+  image.alt = 'Photo of the restaurant'
+
+  return image;
+}
 /**
  * Add markers for current restaurants to the map.
  */
