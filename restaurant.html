@@ -16,13 +16,16 @@
   <!-- Beginning header -->
   <header>
     <!-- Beginning nav -->
-    <nav>
+    <nav class="header-of-the-header">
       <h1><a href="/">Restaurant Reviews</a></h1>
     </nav>
     <!-- Beginning breadcrumb -->
-    <ul id="breadcrumb" >
-      <li><a href="/">Home</a></li>
-    </ul>
+    <!-- Breadcrumb is now a nav element -->
+    <nav aria-label="Breadcrumb">
+      <ol id="breadcrumb">
+        <li><a href="/">Home</a></li>
+      </ol>
+    </nav>
     <!-- End breadcrumb -->
     <!-- End nav -->
   </header>
@@ -39,7 +42,8 @@
         <div id="main-restaurant-info" class="card">
           <img id="restaurant-img" alt="Photo of the restaurant">
           <div class="content">
-            <h1 id="restaurant-name"></h1>
+            <!-- changed h1 to h2 -->
+            <h2 id="restaurant-name"></h2>
             <p id="restaurant-cuisine"></p>
             <p id="restaurant-address"></p>
           </div>
@@ -65,10 +69,11 @@
     </div>
     <!-- Beginning map -->
     <section id="map-container">
+      <!-- and another skip link -->
+      <a href="#reviews-container" id="skip-link">Skip the map</a>
       <div id="map" role="application"></div>
     </section>
     <!-- End map -->
-
   </main>
   <!-- End main -->
 

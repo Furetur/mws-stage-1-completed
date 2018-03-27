@@ -156,7 +156,8 @@ createRestaurantHTML = (restaurant) => {
   content.classList.add('content');
   li.append(content)
 
-  const name = document.createElement('h1');
+  // now its h2 instead of h1, because of semantics
+  const name = document.createElement('h2');
   name.innerHTML = restaurant.name;
   content.append(name);
 

@@ -68,8 +68,8 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   // but when I submitted the project, the reviewer didn't spot it there
   // so I decided to also declare it here, just in case.
 
-  // Please tell me in the review notes where should the alt text be set
-  image.alt = `Photo of the ${name} restaurant`;
+  // sorry for the last error here, it wasn't really smart lol
+  image.alt = `Photo of the ${restaurant.name} restaurant`;
 
   const imageFile = DBHelper.imageUrlForRestaurant(restaurant).slice(0, -4);
 
@@ -174,6 +174,7 @@ fillBreadcrumb = (restaurant=self.restaurant) => {
   const breadcrumb = document.getElementById('breadcrumb');
   const li = document.createElement('li');
   li.innerHTML = restaurant.name;
+  li.setAttribute('aria-current', 'page'); // to indicate that it represents the current page.
   breadcrumb.appendChild(li);
 }
 

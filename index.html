@@ -12,12 +12,18 @@
 
 <body>
   <header>
-    <nav>
+    <nav class="header-of-the-header">
       <h1><a href="/">Restaurant Reviews</a></h1>
     </nav>
   </header>
 
   <main id="maincontent">
+    <!-- changed the order of the sections (map is now 1st)-->
+    <section id="map-container">
+      <!-- implemented a skip link-->
+      <a href="#main-section" id="skip-link">Skip the map</a>
+      <div id="map" role="application"></div>
+    </section>
     <section id="main-section">
       <div class="filter-options">
         <h2>Filter Results</h2>
@@ -32,9 +38,6 @@
       <footer id="second-footer">
         Copyright (c) 2017 <a href="/"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
       </footer>
-    </section>
-    <section id="map-container">
-      <div id="map" role="application"></div>
     </section>
   </main>
 
