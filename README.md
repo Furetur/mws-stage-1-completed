@@ -1,7 +1,7 @@
 # Mobile Web Specialist Certification Course
 ---
 ## Demo?
-[Demo.](https://furetur.github.io/mws-restaurant-stage-1/)
+[Demo.](https://mws-stage1-furetur.netlify.com/)
 
 ## Tasks
  - [x] Redesigned
