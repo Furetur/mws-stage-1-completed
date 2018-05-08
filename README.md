@@ -1,5 +1,15 @@
 # Mobile Web Specialist Certification Course
 ---
+## Demo?
+[Demo.](https://furetur.github.io/mws-restaurant-stage-1/)
+
+## Tasks
+[x] Redesigned
+[x] Available for all display sizes
+[x] a11y (accessible with screenreader and keyboard)
+[x] Saves pages for offline
+....probably smth else
+
 #### _Three Stage Course Material Project - Restaurant Reviews_
 
 ## Project Overview: Stage 1
