@@ -9,7 +9,7 @@ class DBHelper {
    */
   static get DATABASE_URL() {
     // for github pages
-    return `/mws-restaurant-stage-1/data/restaurants.json`;
+    return `/data/restaurants.json`;
   }
 
   /**
